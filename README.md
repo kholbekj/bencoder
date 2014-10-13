@@ -3,6 +3,15 @@ bencoder
 
 Bittorrent encoding in ruby
 
+BEncoder will encode the 4 data types in the specification:
+
+ - Strings
+ - Integers
+ - Arrays
+ - Hashes
+
+Additionally, it will pass symbols as strings, to allow for easier hash convertion.
+
 install with
 
     gem install bencoder
