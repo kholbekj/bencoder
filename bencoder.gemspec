@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
   s.files       =  Dir['Rakefile', '{lib,test}/**/*', 'README*']
   s.homepage    = 'http://rubygems.org/gems/bencoder'
   s.license     = 'MIT'
+  s.add_development_dependency 'Minitest', '~> 5.4', '>= 5.4.0'
 end 
