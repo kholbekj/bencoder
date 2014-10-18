@@ -2,6 +2,7 @@ bencoder
 ========
 
 [![Build Status](https://travis-ci.org/kholbekj/bencoder.svg?branch=master)](https://travis-ci.org/kholbekj/bencoder)
+[![Coverage Status](https://coveralls.io/repos/kholbekj/bencoder/badge.png?branch=master)](https://coveralls.io/r/kholbekj/bencoder?branch=master)
 
 Bittorrent encoding in ruby
 
