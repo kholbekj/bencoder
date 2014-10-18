@@ -1,6 +1,8 @@
 bencoder
 ========
 
+[![Build Status](https://travis-ci.org/kholbekj/bencoder.svg?branch=master)](https://travis-ci.org/kholbekj/bencoder)
+
 Bittorrent encoding in ruby
 
 BEncoder will encode the 4 data types in the specification:
