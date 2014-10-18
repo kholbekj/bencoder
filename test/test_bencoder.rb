@@ -1,7 +1,9 @@
 require 'minitest/autorun'
 require 'bencoder'
+require 'coveralls'
 
 class TestBencoder < Minitest::Test
+  Coveralls.wear!
   def setup
     @be = BEncoder
   end

@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/kholbekj/bencoder'
   s.license     = 'MIT'
   s.add_development_dependency 'minitest', '~> 5.4', '>= 5.4.0'
+  s.add_development_dependency 'coveralls', '~> 0.7.0'
 end 
