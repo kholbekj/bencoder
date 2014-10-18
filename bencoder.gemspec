@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Kasper Holbek Jensen']
   s.email       = 'kholbekj@gmail.com'
   s.files       =  Dir['Rakefile', '{lib,test}/**/*', 'README*']
-  s.homepage    = 'http://rubygems.org/gems/bencoder'
+  s.homepage    = 'https://github.com/kholbekj/bencoder'
   s.license     = 'MIT'
   s.add_development_dependency 'Minitest', '~> 5.4', '>= 5.4.0'
 end 
