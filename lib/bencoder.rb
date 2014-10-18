@@ -24,6 +24,8 @@ class BEncoder
 
     private
 
+    class InvalidEncodingError < StandardError; end
+
     def parse(string)
       case string[0]
       when 'i'
@@ -44,7 +46,7 @@ class BEncoder
       elsif string[0] == 'l' && string[-1] == 'e'
         str = StringIO.new string[1..-2]
       else 
-        raise 'Not a list'
+        raise InvalidEncodingError
       end
       parse_io_list str
     end
@@ -56,7 +58,7 @@ class BEncoder
       elsif string[0] == 'd' && string[-1] == 'e'
         list_of_keys_and_values = parse_list("l#{string[1..-2]}e")
       else
-        raise 'Something in hash is wrong!'
+        raise InvalidEncodingError
       end
       make_hash_from_array list_of_keys_and_values
     end
@@ -75,7 +77,7 @@ class BEncoder
           length = io.gets(sep=':').to_i
           list << io.gets(length)
         else
-          raise 'list not parseable'
+          raise InvalidEncodingError
         end
       end
       io.getc
@@ -94,7 +96,7 @@ class BEncoder
       if string[0] == 'i' && string[-1] == 'e'
         string[1..-2].to_i
       else
-        raise 'Int is formatted wrong'
+        raise InvalidEncodingError
       end
     end
 
@@ -103,7 +105,7 @@ class BEncoder
       if content.length == length.to_i
         content
       else
-        raise 'String length is messed up'
+        raise InvalidEncodingError
       end
     end
 
