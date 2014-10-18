@@ -31,6 +31,6 @@ BEncoder.encode ['what', 'strange', { data: 'I', have: 'here' }, 666]
 => "l4:what7:stranged4:data1:I4:have4:hereei666ee"
 
 BEncoder.decode 'l4:what7:stranged4:data1:I4:have4:hereei666ee'
-=> ['what', 'strange', { data: 'I', have: 'here' }, 666]
+=> ['what', 'strange', { 'data' => 'I', 'have' => 'here' }, 666]
 ```
 Intentionally minimalistic.
