@@ -46,24 +46,7 @@ class BEncoder
       else 
         raise 'Not a list'
       end
-      list = []
-      until peek(str) == 'e' || str.eof?
-        case peek(str)
-        when 'i'
-          list << parse_int(str.gets sep='e')
-        when 'l'
-          list << parse_list(str)
-        when 'd'
-          list << parse_dict(str)
-        when ->(e) { e =~ /\d/ }
-          length = str.gets(sep=':').to_i
-          list << str.gets(length)
-        else
-          raise str.read
-        end
-      end
-      str.getc
-      list
+      parse_io_list str
     end
 
     def parse_dict(string)
@@ -75,8 +58,33 @@ class BEncoder
       else
         raise 'Something in hash is wrong!'
       end
+      make_hash_from_array list_of_keys_and_values
+    end
+
+    def parse_io_list(io)
+      list = []
+      until peek(io) == 'e' || io.eof?
+        case peek(io)
+        when 'i'
+          list << parse_int(io.gets sep='e')
+        when 'l'
+          list << parse_list(io)
+        when 'd'
+          list << parse_dict(io)
+        when ->(e) { e =~ /\d/ }
+          length = io.gets(sep=':').to_i
+          list << io.gets(length)
+        else
+          raise 'list not parseable'
+        end
+      end
+      io.getc
+      list
+    end
+
+    def make_hash_from_array(list)
       hash = {}
-      list_of_keys_and_values.each_slice(2) do |k,v|
+      list.each_slice(2) do |k,v|
         hash[k] = v
       end
       hash
