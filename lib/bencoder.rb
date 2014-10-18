@@ -118,7 +118,6 @@ class BEncoder
     def peek(io)
       char = io.getc
       io.ungetc char
-      puts char
       char
     end
   end
