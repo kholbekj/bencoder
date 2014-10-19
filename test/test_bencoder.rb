@@ -88,4 +88,10 @@ class TestBencoder < Minitest::Test
       @be.decode '4:cat'
     end
   end
+
+  def test_throws_error_on_unknown_encoding_identifier
+    assert_raises InvalidEncodingError do
+      @be.decode 'li3ej5e'
+    end
+  end
 end
