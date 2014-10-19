@@ -36,4 +36,10 @@ BEncoder.encode ['what', 'strange', { data: 'I', have: 'here' }, 666]
 BEncoder.decode 'l4:what7:stranged4:data1:I4:have4:hereei666ee'
 => ['what', 'strange', { 'data' => 'I', 'have' => 'here' }, 666]
 ```
-Intentionally minimalistic.
+
+Since .torrent files are bencode dicts, you can parse them out of the box
+
+```ruby
+BEncoder.decode File.read('sample.torrent')
+=> {"announce"=>"udp://tracker.openbittorrent.com:80", "creation date"=>1327049827, "info"=>{"length"=>20, "name"=>"sample.txt", "piece length"=>65536, "pieces"=>"\\\xC5\xE6R\xBE\r\xE6\xF2x\x05\xB3\x04d\xFF\x9B\x00\xF4\x89\xF0\xC9", "private"=>1}}
+```

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'bencoder'
-  s.version     = '0.0.4'
+  s.version     = '0.1.0'
   s.summary     = 'Bittorrent encoding'
   s.description = 'Minimalistic BEncoding gem'
   s.authors     = ['Kasper Holbek Jensen']
