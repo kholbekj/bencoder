@@ -67,7 +67,7 @@ class TestBencoder < Minitest::Test
 
   def test_throws_error_on_wrong_list_encoding
     assert_raises InvalidEncodingError do
-      @be.decode 'lbeste'
+      @be.decode 'li4ed'
     end
   end
 
