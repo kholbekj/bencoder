@@ -37,7 +37,7 @@ class TestBencoder < Minitest::Test
     assert_equal 'ld4:somel5:times3:youe5:gotta3:let2:go1:!ei2e5:wooooli1e1:21:3ee', @be.encode([{'some' => ['times', 'you'], gotta: 'let', go: '!'}, 2, "woooo", [1, '2', "3"]])
   end
 
-  def should_not_encode_strange_types
+  def test_should_not_encode_strange_types
     assert_raises UnencodableTypeError do
       @be.encode 5.6
     end
