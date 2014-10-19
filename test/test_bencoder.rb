@@ -37,6 +37,12 @@ class TestBencoder < Minitest::Test
     assert_equal 'ld4:somel5:times3:youe5:gotta3:let2:go1:!ei2e5:wooooli1e1:21:3ee', @be.encode([{'some' => ['times', 'you'], gotta: 'let', go: '!'}, 2, "woooo", [1, '2', "3"]])
   end
 
+  def should_not_encode_strange_types
+    assert_raises UnencodableTypeError do
+      @be.encode 5.6
+    end
+  end
+
   #decoding
 
   def test_string_decoding
@@ -59,9 +65,27 @@ class TestBencoder < Minitest::Test
     assert_equal [{'some' => ['times', 'you'], 'gotta' => 'let', 'go' => '!'}, 2, "woooo", [1, '2', "3"]], @be.decode('ld4:somel5:times3:youe5:gotta3:let2:go1:!ei2e5:wooooli1e1:21:3ee')
   end
 
-  def test_throwing_error_on_wrong_encoding
+  def test_throws_error_on_wrong_list_encoding
     assert_raises InvalidEncodingError do
-      @be.decode('lbeste')
+      @be.decode 'lbeste'
+    end
+  end
+
+  def test_throws_error_on_wrong_dict_encoding
+    assert_raises InvalidEncodingError do
+      @be.decode 'd3:abc'
+    end
+  end
+
+  def test_throws_error_on_wrong_int_encoding
+    assert_raises InvalidEncodingError do
+      @be.decode 'i14'
+    end
+  end
+
+  def test_throws_error_on_wrong_string_encoding
+    assert_raises InvalidEncodingError do
+      @be.decode '4:cat'
     end
   end
 end

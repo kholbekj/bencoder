@@ -1,6 +1,7 @@
 require 'stringio'
 
 class InvalidEncodingError < StandardError; end
+class UnencodableTypeError < StandardError; end
 
 class BEncoder
   class << self
@@ -16,6 +17,8 @@ class BEncoder
         encode_array object
       when Hash
         encode_hash object
+      else
+        raise UnencodableTypeError, "Cannot encode instance of type #{object.class}"
       end
     end
 
@@ -47,7 +50,7 @@ class BEncoder
       elsif string[0] == 'l' && string[-1] == 'e'
         str = StringIO.new string[1..-2]
       else 
-        raise InvalidEncodingError
+        raise InvalidEncodingError, 'List does not have a closing e'
       end
       parse_io_list str
     end
@@ -57,9 +60,9 @@ class BEncoder
         string.getc if peek(string) == 'd'
         list_of_keys_and_values = parse_list(string)
       elsif string[0] == 'd' && string[-1] == 'e'
-        list_of_keys_and_values = parse_list("l#{string[1..-2]}e")
+        list_of_keys_and_values = parse_list("l#{ string[1..-2] }e")
       else
-        raise InvalidEncodingError
+        raise InvalidEncodingError, 'Dict does not have a closing e'
       end
       make_hash_from_array list_of_keys_and_values
     end
@@ -78,7 +81,7 @@ class BEncoder
           length = io.gets(sep=':').to_i
           list << io.gets(length)
         else
-          raise InvalidEncodingError
+          raise InvalidEncodingError, "Encountered unexpected identifier #{ peek io }"
         end
       end
       io.getc
@@ -97,7 +100,7 @@ class BEncoder
       if string[0] == 'i' && string[-1] == 'e'
         string[1..-2].to_i
       else
-        raise InvalidEncodingError
+        raise InvalidEncodingError, 'Integer does not have closing e'
       end
     end
 
@@ -106,16 +109,16 @@ class BEncoder
       if content.length == length.to_i
         content
       else
-        raise InvalidEncodingError
+        raise InvalidEncodingError, "String length declared as #{length.to_i}, but was #{content.length} " 
       end
     end
 
     def encode_string(string)
-      "#{string.length}:#{string}"
+      "#{ string.length }:#{ string }"
     end
 
     def encode_int(int)
-      "i#{int}e"
+      "i#{ int }e"
     end
 
     def encode_array(array)
@@ -123,7 +126,7 @@ class BEncoder
     end
 
     def encode_hash(hash)
-      hash.inject("d") { |result, (k,v)| result += "#{encode(k.to_s)}#{encode(v)}" } + 'e'
+      hash.inject("d") { |result, (k,v)| result += "#{ encode(k.to_s) }#{ encode(v) }" } + 'e'
     end
 
     def peek(io)
