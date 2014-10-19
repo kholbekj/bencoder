@@ -1,4 +1,7 @@
 require 'stringio'
+
+class InvalidEncodingError < StandardError; end
+
 class BEncoder
   class << self
     def encode(object)
@@ -23,8 +26,6 @@ class BEncoder
 
 
     private
-
-    class InvalidEncodingError < StandardError; end
 
     def parse(string)
       case string[0]

@@ -13,6 +13,10 @@ class TestBencoder < Minitest::Test
 
   #encoding
 
+  def test_symbol_encoding
+    assert_equal '6:hellou', @be.encode(:hellou)
+  end
+
   def test_string_encoding
     assert_equal '7:Someday', @be.encode('Someday')
   end
@@ -53,5 +57,11 @@ class TestBencoder < Minitest::Test
 
   def test_nested_decoding
     assert_equal [{'some' => ['times', 'you'], 'gotta' => 'let', 'go' => '!'}, 2, "woooo", [1, '2', "3"]], @be.decode('ld4:somel5:times3:youe5:gotta3:let2:go1:!ei2e5:wooooli1e1:21:3ee')
+  end
+
+  def test_throwing_error_on_wrong_encoding
+    assert_raises InvalidEncodingError do
+      @be.decode('lbeste')
+    end
   end
 end
